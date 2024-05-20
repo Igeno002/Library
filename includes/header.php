@@ -1,3 +1,5 @@
+
+
 <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
@@ -24,11 +26,14 @@
 
             <div class="right-div">
                 
-           
+            <a href="chatingpage.php" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-pencil"></span>
+                OLD MESSAGE<b style="color: red;" >(3)</b>
+               </a>
                 <!-- Trigger the modal with a button -->
                 <a href="#" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
                 <span class="glyphicon glyphicon-envelope"></span>
-                CHATROOM<b style="color: red;">(3)</b>
+                COMPOSE<b style="color: red;" class="glyphicon glyphicon-pencil"></b>
                </a>
 
                 <!-- Modal -->
@@ -43,19 +48,18 @@
                       </div>
                       <div class="modal-body">
                         <p>hello how can we help you today</p>
-                      <form>
+                      <form action="sendmessage.php" method="POST">
                           <div class="form-group">
                               <label for="comment">Write a Message:</label>
-                              <textarea class="form-control" rows="5" id="comment"></textarea>
+                              <textarea class="form-control" type="text" name="message" rows="5" id="comment"></textarea>
                             </div>
-
-                          <button type="button" class="btn btn-success btn-lg" style="width: 20%;">Send</button>
+                        <button type="submit" name="submit" class="btn btn-success btn-lg" style="width: 20%;">CONTINUE</button>
                       </form>
                             
 
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" >Close</button>
                       </div>
                     </div>
                   

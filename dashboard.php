@@ -10,6 +10,8 @@ header('location:index.php');
 else{
     $id=$_SESSION['StuId'];
     $name=$_SESSION['FullName'];
+    //for send messages
+    $_SESSION['$studentid']=$id;
     ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
