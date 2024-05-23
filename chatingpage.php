@@ -48,7 +48,7 @@ else{
         <div class="row">
 
         <?php
-            $sql = "SELECT * FROM messagestbl";
+            $sql = "SELECT * FROM messagestbl order by MessageId desc";
             $result = $conn->query($sql);
             
             if ($result->num_rows > 0) {
@@ -135,6 +135,7 @@ else{
    
     </div>
 </div>
+
      <!-- CONTENT-WRAPPER SECTION END-->
 <?php include('includes/footer.php');?>
       <!-- FOOTER SECTION END-->
@@ -147,4 +148,5 @@ else{
     <script src="assets/js/custom.js"></script>
 </body>
 </html>
+
 <?php } ?>

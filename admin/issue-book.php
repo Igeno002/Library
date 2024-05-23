@@ -13,11 +13,13 @@ if(isset($_POST['issue']))
 $studentid=strtoupper($_POST['studentid']);
 $bookid=$_POST['bookid'];
 $isissued=1;
-$sql="INSERT INTO  tblissuedbookdetails(StudentID,BookId) VALUES(:studentid,:bookid);
+$endingdate=$_POST['ending'];
+$sql="INSERT INTO  tblissuedbookdetails(StudentID,BookId,EndingDate) VALUES(:studentid,:bookid,:endingdate);
 update tblbooks set isIssued=:isissued where id=:bookid;";
 $query = $dbh->prepare($sql);
 $query->bindParam(':studentid',$studentid,PDO::PARAM_STR);
 $query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
+$query->bindParam(':endingdate',$endingdate,PDO::PARAM_STR);
 $query->bindParam(':isissued',$isissued,PDO::PARAM_STR);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
@@ -114,7 +116,7 @@ Issue a New Book
 <form role="form" method="post">
 
 <div class="form-group">
-<label>Srtudent id<span style="color:red;">*</span></label>
+<label>Student id<span style="color:red;">*</span></label>
 <input class="form-control" type="text" name="studentid" id="studentid" onBlur="getstudent()" autocomplete="off"  required />
 </div>
 
@@ -127,13 +129,20 @@ Issue a New Book
 
 
 <div class="form-group">
-<label>ISBN Number or Book Title<span style="color:red;">*</span></label>
+<label>ISBN Number <span style="color:red;">*</span></label>
 <input class="form-control" type="text" name="booikid" id="bookid" onBlur="getbook()"  required="required" />
 </div>
 
  <div class="form-group" id="get_book_name">
 
  </div>
+
+ <div class="form-group">
+<label>Returning Date:<span style="color:red;">*</span></label>
+<input class="form-control" type="datetime-local" name="ending" required="required" />
+</div>
+
+
 <button type="submit" name="issue" id="submit" class="btn btn-info">Issue Book </button>
 
                                     </form>

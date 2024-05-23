@@ -1,4 +1,19 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="refresh" content="10"/>
 <?php
+use Infobip\Configuration;
+use Infobip\Model\SmsTextualMessage;
+use Infobip\SmsApi;
+use Infobip\SmsDestination;
+use Infobip\SmsTextualMessge;
+use Infobip\SmsAdvancedTextualRequest;
+
 session_start();
 error_reporting(0);
 include('connection/connection.php');
@@ -7,17 +22,59 @@ if(strlen($_SESSION['alogin'])==0)
   { 
 header('location:index.php');
 }
-else{?>
-
-    <?php
+else{
        
             $fullname=$_SESSION['fullname'];
+            $sql3 = "SELECT tblstudents.StudentId,tblstudents.MobileNumber,tblstudents.FullName,
+            tblissuedbookdetails.StudentID,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.EndingDate FROM 
+            tblissuedbookdetails,tblstudents WHERE tblissuedbookdetails.StudentId=tblstudents.StudentID";
+            $result = $conn->query($sql3);
+
+            if ($result->num_rows > 0) {
+                // Output data of each row
+               while( $row = $result->fetch_assoc())
+                {
+                  $currentDateTime =date("Y-m-d H:i:s");
+
+
+                  
+                    $currentDate = strtotime($currentDateTime);
+                    $timeending = strtotime($row["EndingDate"]);
+
+                    if($currentDate > $timeending and $currentDate <= $timeending + 11)
+                    {
+
+                      require __DIR__ ."/vendor/autoload.php";
+                      $message='Hello '.$fullname.'Your Time to bring back book is ended We Start To count Fine Now';
+                       $number='+25'.$row['MobileNumber'];
+                     
+                       $apiURL="mmg1mw.api.infobip.com";
+                       $apiKey= "1219c9ff758ebbf48554a8d2a0e9448a-abfb332c-9cf6-401d-9b8f-37f121958fc2";
+                     
+                       $configuration=new Configuration(host: $apiURL, apiKey: $apiKey);
+                       $api= new Infobip\Api\SmsApi(config: $configuration);
+                       $destnation= new Infobip\Model\SmsDestination(to: $number);
+                       $theMessage= new SmsTextualMessage(
+                         destinations:[$destnation],
+                         text: $message,
+                         from:"M-MONEY"
+                       );
+                       $request=new Infobip\Model\SmsAdvancedTextualRequest(messages: [$theMessage]);
+                       $response=$api->sendSmsMessage($request);
+                       echo "message sent";
+                    }
+                   
+
+
+
+               }
+                
+            } 
 
     ?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
+
+
+ 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />

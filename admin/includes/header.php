@@ -1,3 +1,12 @@
+<?php
+session_start();
+include("connection/connection.php");
+$sql = "SELECT distinct tblstudents.FullName, tblstudents.StudentId,messagestbl.StudentId,messagestbl.Content FROM tblstudents,messagestbl WHERE tblstudents.StudentId=messagestbl.StudentId";
+            $result = $conn->query($sql);
+          $_SESSION['studentid']=$row['StudentId'];
+            ?>
+
+
 <div class="navbar navbar-inverse set-radius-zero" >
         <div class="container">
             <div class="navbar-header">
@@ -43,18 +52,25 @@
                         <h4 class="modal-title">WELCOME IN OUR CHAT ROOM</h4>
                       </div>
                       <div class="modal-body">
-                      
-                        <div class="well">
+                        <?php
+                      if ($result->num_rows > 0) {
+              // Fetch and output data row by row
+              while($row = $result->fetch_assoc())
+              {
+                 $fullname= $row["FullName"];
+                ?>
+              
+                     <div class="well">
                               <table class="table ">
                                   <tr>
                                     <td rowspan="0" class="col-md-2">
                                         <img src="assets/img/avatar.png" alt="Avatar" class="avatar" style="width: 100%; border-radius: 50%;">
                                     </td>
-                                    <td><b>ITANGISHAKA IGENO ISAAC</b></td>
+                                    <td><b><?php echo $row['FullName'];?></b></td>
                                   </tr>
 
                                   <tr>
-                                    <td>Hy I want your Help are ready<b style="font-size: 120%; color: green;">(3)</b>
+                                    <td><?php echo $row['Content'];?><b style="font-size: 120%; color: green;">(3)</b>
                                     <!-- Trigger the modal with a button -->
                                     <a href="#" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal1">
                                     Reply</b>
@@ -63,29 +79,10 @@
                                   </tr>
                               </table>
                                <hr style="border-color: black;"> 
-
-
-
-
-                                <table class="table ">
-                                  <tr>
-                                    <td rowspan="0" class="col-md-2">
-                                        <img src="assets/img/1.png" alt="Avatar" class="avatar" style="width: 100%; border-radius: 50%;">
-                                    </td>
-                                    <td><b>UWISEZERENO Liliane</b></td>
-                                  </tr>
-
-                                  <tr>
-                                    <td>Hy I want your Help are ready<b style="font-size: 120%; color: green;">(1)</b>
-                                    <!-- Trigger the modal with a button -->
-                                    <a href="#" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal1">
-                                    Reply</b>
-                                   </a>
-                                    </td>
-                                  </tr>
-                              </table>
-                               <hr style="border-color: black;"> 
-
+              <?php
+                }
+                }
+                ?>
 
 
 
@@ -103,19 +100,17 @@
                     <div class="modal-content col-md-11" >
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><b>ITANGISHAKA IGENO Isaac</b></h4><hr>
-                        <p style="background-color: blueviolet; color:white;margin-right: 50%;">Hy I want your Help are ready</p>
-                        <p style="margin-left: 40%; color: red; background-color: black;">Hy I want your Help are ready</p>
+                        <h4 class="modal-title"><b>Reply</b></h4>
                       </div>
                       <div class="modal-body">
                         
-                      <form>
+                      <form action="reply.php" method="post">
                           <div class="form-group">
                               <label for="comment">Write a Message:</label>
-                              <textarea class="form-control" rows="5" id="comment"></textarea>
+                              <textarea class="form-control" rows="5" id="comment" type="text"  name="reply"></textarea>
                             </div>
 
-                          <button type="button" class="btn btn-success btn-lg" style="width: 20%;">Send</button>
+                          <button type="submit"  name="reply" class="btn btn-success btn-lg" style="width: 20%;">Send</button>
                       </form>
                             
 
@@ -153,12 +148,13 @@
 
         </div>
     </div>
+              </div>
     <!-- LOGO HEADER END-->
     <section class="menu-section">
         <div class="container">
             <div class="row ">
                 <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
+                    <div class="navbar-collapse collapse">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a href="dashboard.php" class="menu-top-active">DASHBOARD</a></li>
                            

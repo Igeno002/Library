@@ -25,11 +25,7 @@
             </div>
 
             <div class="right-div">
-                
-            <a href="chatingpage.php" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-pencil"></span>
-                OLD MESSAGE<b style="color: red;" >(3)</b>
-               </a>
+
                 <!-- Trigger the modal with a button -->
                 <a href="#" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
                 <span class="glyphicon glyphicon-envelope"></span>
@@ -115,10 +111,11 @@
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">                        
                           
-      <li><a href="index.php">Home</a></li>
-      <li><a href="index.php#ulogin">User Login</a></li>
+      <li><a href="index.php">HOME</a></li>
+      <li><a href="signup.php">SIGN UP</a></li>
+    
                          
-                            <li><a href="adminlogin.php">Admin Login</a></li>
+                            <li><a href="adminlogin.php">ADMIN DASHBOARD</a></li>
 
                         </ul>
                     </div>
